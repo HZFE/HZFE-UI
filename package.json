@@ -8,7 +8,7 @@
   "scripts": {
     "commitmsg": "commitlint -e $GIT_PARAMS",
     "preversion": "npm test",
-    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1 && git add CHANGELOG.md && npm run build && git add -A dist"
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1 && git add CHANGELOG.md && npm run build && git add -A dist",
     "postversion": "git push && git push --tags && rm -rf build/temp"
   },
   "devDependencies": {
