@@ -4,5 +4,13 @@
   "main": "index.js",
   "repository": "git@github.com:HZFE/HZFE-UI.git",
   "author": "gongpeione <pei.gong@ele.me>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "commitmsg": "commitlint -e $GIT_PARAMS"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^6.1.3",
+    "commitlint": "^6.1.3",
+    "husky": "^0.14.3"
+  }
 }
