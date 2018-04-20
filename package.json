@@ -9,12 +9,37 @@
     "commitmsg": "commitlint -e $GIT_PARAMS",
     "preversion": "npm test",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1 && git add CHANGELOG.md && npm run build && git add -A dist",
-    "postversion": "git push && git push --tags && rm -rf build/temp"
+    "postversion": "git push && git push --tags && rm -rf build/temp",
+    "start": "node scripts/start.js",
+    "build:component": "node scripts/build.component.js"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^6.1.3",
     "commitlint": "^6.1.3",
     "conventional-changelog": "^1.1.24",
     "husky": "^0.14.3"
+  },
+  "dependencies": {
+    "@types/react": "^16.3.12",
+    "@types/react-dom": "^16.0.5",
+    "awesome-typescript-loader": "^5.0.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "case-sensitive-paths-webpack-plugin": "^2.1.2",
+    "chalk": "^2.4.0",
+    "css-loader": "^0.28.11",
+    "html-webpack-plugin": "^3.2.0",
+    "postcss-loader": "^2.1.4",
+    "react": "^16.3.2",
+    "react-dev-utils": "^5.0.1",
+    "react-dom": "^16.3.2",
+    "style-loader": "^0.21.0",
+    "ts-loader": "^4.2.0",
+    "tslint": "^5.9.1",
+    "tslint-loader": "^3.6.0",
+    "typescript": "^2.8.3",
+    "webpack": "^4.6.0",
+    "webpack-dashboard": "^1.1.1",
+    "webpack-dev-server": "^3.1.3"
   }
 }

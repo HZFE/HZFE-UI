@@ -1,12 +1,16 @@
 {
   "compilerOptions": {
     "strictNullChecks": true,
-    "moduleResolution": "node",
+    "module": "esnext",
     "experimentalDecorators": true,
-    "jsx": "preserve",
-    "noUnusedParameters": true,
-    "noUnusedLocals": true,
+    "jsx": "react",
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
     "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "target": "es6",
     "lib": [
       "dom",
