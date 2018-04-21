@@ -5,6 +5,7 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
 const { TsConfigPathsPlugin } = require('awesome-typescript-loader')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const DashboardPlugin = require('webpack-dashboard/plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const pkg = require(path.join(process.cwd(), 'package.json'))
 
@@ -17,10 +18,6 @@ const config = {
   resolve: {
     modules: ['node_modules', path.join(__dirname, '../node_modules')],
     extensions: [
-      '.web.tsx',
-      '.web.ts',
-      '.web.jsx',
-      '.web.js',
       '.ts',
       '.tsx',
       '.js',
@@ -34,20 +31,19 @@ const config = {
   module: {
     strictExportPresence: true,
     rules: [
-      // tslint
       {
-        test: /\.(ts|tsx)$/,
+        test: /\.tsx?$/,
         loader: require.resolve('tslint-loader'),
         enforce: 'pre',
         include: paths.appSrc,
       },
       {
         test: /\.jsx?$/,
+        loader: require.resolve('babel-loader'),
         exclude: /node_modules/,
-        loader: 'babel-loader',
       },
       {
-        test: /\.(ts|tsx)$/,
+        test: /\.tsx?$/,
         use: [
           {
             loader: 'ts-loader',
@@ -61,49 +57,53 @@ const config = {
         ],
       },
       {
-        test: /\.css$/,
-        use: [
-          require.resolve('style-loader'),
-          {
-            loader: require.resolve('css-loader'),
-            options: {
-              importLoaders: 1,
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: require.resolve('style-loader'),
+          use: [
+            {
+              loader: require.resolve('css-loader'),
+              options: { importLoaders: 2, sourceMap: true },
             },
-          },
-          {
-            loader: require.resolve('postcss-loader'),
-            options: {
-              // Necessary for external CSS imports to work
-              // https://github.com/facebookincubator/create-react-app/issues/2677
-              ident: 'postcss',
-              plugins: () => [
-                require('postcss-flexbugs-fixes'),
-                autoprefixer({
-                  browsers: [
-                    '>1%',
-                    'last 4 versions',
-                    'Firefox ESR',
-                    'not ie < 9', // React doesn't support IE8 anyway
-                  ],
-                  flexbox: 'no-2009',
-                }),
-              ],
+            {
+              loader: require.resolve('postcss-loader'),
+              options: {
+                sourceMap: true,
+                // Necessary for external CSS imports to work
+                // https://github.com/facebookincubator/create-react-app/issues/2677
+                ident: 'postcss',
+                plugins: () => [
+                  require('postcss-flexbugs-fixes'),
+                  autoprefixer({
+                    browsers: [
+                      '>1%',
+                      'last 4 versions',
+                      'Firefox ESR',
+                      'not ie < 9', // React doesn't support IE8 anyway
+                    ],
+                    flexbox: 'no-2009',
+                  }),
+                ],
+              },
             },
-          },
-        ],
+            {
+              loader: 'sass-loader',
+              options: { sourceMap: true },
+            },
+          ]
+        })
       },
     ]
   },
   plugins: [
     new DashboardPlugin(),
+    new CaseSensitivePathsPlugin(),
     new TsConfigPathsPlugin({
       tsconfig: paths.tsConfig
     }),
-    // new InterpolateHtmlPlugin({
-    //   PUBLIC_URL: '/',
-    //   NODE_ENV: process.env.NODE_ENV || 'development',
-    // }),
-    new CaseSensitivePathsPlugin(),
+    new ExtractTextPlugin({
+      filename: '[name].css'
+    })
   ]
 }
 
@@ -113,7 +113,7 @@ if (process.env.NODE_ENV === 'development') {
   config.plugins.push(
     new HtmlWebpackPlugin({
       inject: true,
-      template: paths.docHtml,
+      template: paths.docIndexHtml,
     })
   )
 } else {

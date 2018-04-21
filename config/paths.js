@@ -38,21 +38,16 @@ function getServedPath(appPackageJson) {
   return ensureSlash(servedUrl, true);
 }
 
-// config after eject: we're in ./config/
 module.exports = {
-  dotenv: resolveApp('.env'),
   appBuild: resolveApp('build'),
-  docPublic: resolveApp('docs'),
-  projectPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
-  yarnLockFile: resolveApp('yarn.lock'),
-  testsSetup: resolveApp('src/setupTests.ts'),
+  docPublic: resolveApp('docs'),
+  docIndexJs: resolveApp('docs/index.tsx'),
+  docIndexHtml: resolveApp('docs/index.html'),
+  componentIndexjs: resolveApp('components/index.ts'),
+  tsConfig: resolveApp('tsconfig.json'),
+  dotenv: resolveApp('.env'),
   appNodeModules: resolveApp('node_modules'),
-  appTsConfig: resolveApp('tsconfig.json'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
-  docIndexJs: resolveApp('docs/index.tsx'),
-  docHtml: resolveApp('docs/index.html'),
-  tsConfig: resolveApp('tsconfig.json'),
-  componentIndexjs: resolveApp('components/index.ts')
 };
